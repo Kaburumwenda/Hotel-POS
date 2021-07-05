@@ -1,0 +1,277 @@
+{% load humanizelib %}
+{% load crispy_forms_tags %}
+
+{% block script %} 
+{% endblock %}
+
+<div id="cashier-content-con">
+    <div class="row">
+        <div class="col-md-4">
+
+            
+            <div id="cart-ch-con">
+                <div class="cart-table-con">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <th>#Name</th>
+                            <th class="text-center">QTY</th>
+                            <th class="text-center">@</th>
+                            <th class="text-center">Total</th>
+                            <th></th>
+                        </thead>
+                           {% for rs in shopcart %}
+                            <tr>
+                                <td>
+                                    <span style="font-size: 14px;">{{ rs.product.title|truncatechars:20 }}</span>
+                                </td>
+                                <td> 
+                                    <div class="cart-input-action">
+                                        <a href="/cashier/shopcart_plus/{{ rs.id }}">
+                                            <span class="material-icons icon-action">add_circle_outline</span>
+                                        </a>
+                                        <input id=cartinput type=number value="{{ rs.quantity }}" min=1 max=110 readonly>
+                                        <a href="/cashier/shopcart_minus/{{ rs.id }}">
+                                            <span class="material-icons icon-action">remove_circle_outline</span>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span style="font-size: 14px;">{{ rs.product.Sprice}}</span>
+                                </td>
+
+                                <td>
+                                    {{ rs.amount }}
+                                </td>
+
+                                <td>
+                                    <a href="/cashier/deletefromcart/{{ rs.id }}">
+                                        <span class="material-icons" style="color: red;">delete_outline </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                                                  
+                           
+                        </tbody>
+                    </table>
+                    <br>
+                    <div id="cart-totals-con">
+
+                        <div>
+                            <span>Total Items: <strong>{{ cart_count }}</strong></span><br>
+                            <label>Discount:</label>
+                            <input type="number" value="0" class="discount-cart">
+                            <form action="/cashier/order/" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="status" value="Paid" class="hidden"/>
+                              <label>Table:</label>
+                              <input type="text" name="table" value="1" class="discount-cart" min="1" style="margin-top: 5px;">
+                        </div>
+
+                        <div>
+                            <span>SubTotal: <strong>ksh {{ total|intcomma}}</strong></span><br>
+                            <span>Tax: inclusive</span><br>
+                            <span>Grand Total: <strong>ksh {{ total|intcomma }}</strong></span>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+
+
+                <div class="cart-spacer"></div>
+
+
+                <div>
+                    <div class="cart-footer-con">
+                        <a href="/cashier/order/">
+                            <button class="btn btn-warning cart-ft-action">
+                                <span class="material-icons">offline_pin</span><br>
+                                <span>Finish</span>
+                            </button>
+                           </a>
+
+                </form>    
+
+                            <a href="{% url 'clear-cart'%}">
+                                <button class="btn btn-danger cart-ft-action">
+                                    <span class="material-icons">delete_forever</span><br>
+                                    <span>Discard</span>
+                                </button>
+                            </a>
+                     
+                            <button class="btn btn-info cart-ft-action" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <span class="material-icons">sync_problem</span><br>
+                                <span>Pend</span>
+                            </button>
+                          <!--   PENDING MODAL -- START -->
+                          <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Are you sure... you want to pend this order !!!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                            <form action="/cashier/order/" method="POST">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                 <label>Enter Table No:</label>
+                                 <input type="text" name="table" value="1">
+                                 <input type="text" name="status" value="Pending" class="hidden">
+                                </div>
+                                <div class="modal-footer d-grid">
+                                    <button type="submit" class="btn btn-warning btn-lg" style="width: 200px;">pend order</button>
+                                </div>
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                          <!-- PENDING MODAL --- END-->
+                      
+                        <button class="btn btn-success cart-ft-action">
+                            <span class="material-icons">print</span><br>
+                            <span>Receipt</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ************************* BODY START******************************-->
+        <div class="col-md-8">
+            <div>
+                <div>
+                    <form action="/cashier/search/" method="POST">
+                        {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">
+                           <button type="submit" style="background-color: transparent; outline: none; border: none;"> <span class="material-icons">search</span></button>
+                        </span>
+                        <input type="text" name="query" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            
+                    </div>
+                </form>
+                </div>
+
+                <div class="content-con-main">
+                    <div>
+                        <div id="content-items-con">
+                            {% for rs in data %}
+                            <div>
+                                <a href="/cashier/addtoshopcart/{{rs.id }}">
+                                    <div class="card" id="items-card">
+                                        <img src="{{ rs.image.url}}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                          <span class="card-text">{{ rs.title|truncatechars:35}}</span><br>
+                                          <span><strong>Ksh: {{ rs.Sprice|intcomma }}</strong></span>
+                                        </div>
+                                      </div>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+<!-- ************************* BODY END ******************************-->
+
+    </div>
+</div>
+
+<style>
+    .hidden{
+        display: none !important;
+    }
+    #cart-ch-con{
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        height: 80vh;
+        margin-left: 5px;
+        border-radius: 5px;
+    }
+    .cart-spacer{
+        flex: 1;
+    }
+    .cart-footer-con{
+        background-color: grey;
+        z-index: 1;
+        padding: 5px 5px 5px 5px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .cart-table-con{
+        overflow-y: auto;
+    }
+       /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button, 
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+   input[type=number] {
+    -moz-appearance: textfield;
+    } 
+    .icon-action{
+        cursor: pointer;
+    }
+    #cartinput{
+        width: 40px;
+        height: 30px;
+    }
+    .cart-input-action{
+        display: flex;
+        align-items: center;
+    }
+    .discount-cart{
+        width: 60px;
+    }
+    #cart-totals-con{
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 10px 0px 10px;
+    }
+    .cart-ft-action{
+        width: 100px;
+        height: 60px;
+        color: white;
+    }
+
+    /*******888888888888 ************  PRODUCTS ************/
+    .content-con-main{
+        background-color: white;
+        border-radius: 5px;
+        padding: 10px 10px 10px 10px;
+        height: 70vh;
+        overflow-y: auto;
+    }
+    #content-items-con{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        text-decoration: none;
+    }
+    #content-items-con a{
+        text-decoration: none;
+        color: #333333;
+        font-size: 14px;
+    }
+    #items-card{
+        width: 150px;
+        height: 150px;
+        margin: 5px;
+    }
+    .card-img-top{
+        max-height: 60px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 145px;
+    }
+</style>
+
+

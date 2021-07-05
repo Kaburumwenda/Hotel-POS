@@ -1,0 +1,175 @@
+<div>
+    <div id="cashier-top-nav">
+        <span class="fa fa-database"></span>
+        <span class="point-tp"> POINT </span>
+     <span class="sale-tp">OFF SALE</span>
+    </div>
+    <!-- NAV TWO-->
+    <div id="cashier-tp-nav-two">
+
+        <div>
+            <a href="/cashier">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">king_bed</span><br>
+                        <span>Dashboard</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <button class="top-btn-con" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div>
+                    <span class="material-icons">people_alt</span><br>
+                    <span>Users</span>
+                </div>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Accounts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    ...
+                    </div>
+                </div>
+                </div>
+            </div>
+           <!--MODAL-->
+        </div>
+
+        <div>
+            <button class="top-btn-con" type="button" data-bs-toggle="modal" data-bs-target="#twoexampleModal">
+                <div>
+                    <span class="material-icons">view_quilt</span><br>
+                    <span>Menu</span>
+                </div>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="twoexampleModal" tabindex="-1" aria-labelledby="twoexampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="twoexampleModalLabel">Select Menu Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <h1>hello</h1>
+                  
+                    </div>
+                </div>
+                </div>
+            </div>
+           <!--MODAL-->
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">king_bed</span><br>
+                        <span>Rooms</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">add_shopping_cart</span><br>
+                        <span>Orders</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">point_of_sale </span><br>
+                        <span>Sales</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="{% url 'cashier_pend_orders'%}">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons"> pending_actions  </span><br>
+                        <span>Pending</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">person_pin</span><br>
+                        <span>Guest</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons"> history_edu</span><br>
+                        <span>History</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div>
+            <a href="">
+                <button class="top-btn-con">
+                    <div>
+                        <span class="material-icons">settings</span><br>
+                        <span>Settings</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+
+    </div>
+   </div>
+
+   <style>
+    #cashier-top-nav{
+        background: #339966 !important;
+        padding:10px 20px 10px 20px;
+    }
+    .point-tp{
+        color: white;
+        font-weight: bold;
+    }
+    .sale-tp{
+        font-weight: bold;
+    }
+    /******************************* NAV TWO ***********/
+    #cashier-tp-nav-two{
+        background-color: white;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .top-btn-con{
+        background-color: #339966 !important;
+        color: white;
+        width: 120px;
+    }
+   </style>

@@ -1,0 +1,114 @@
+{% extends 'base/index.html'%}
+{% load humanizelib %}
+{% block content %}
+<div>
+    <div>
+       {% include 'cashier/nav.html'%}
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-4">
+                <div id="pend-order-con">
+                    <div><center><span class="pend-top-title"><em>Your Orders</em></span></center></div>
+                    <div id="pend-order-con-items">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <th>Cashier</th>
+                                <th>Table No:</th>
+                                <th>Amount</th>
+                                <th>Time</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                {% for rs in orders %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ rs.table }}</td>
+                                    <td>Ksh {{ rs.amount|intcomma }}</td>
+                                    <td>{{ rs.time }}</td>
+                                    <td>
+                                        <a href="/cashier/pending/det/{{ rs.id }}/" class="btn btn-info">
+                                            <span class="material-icons">remove_red_eye </span>
+                                        </a>
+                                    
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div id="pend-order-det-con">
+                    <div><center><span class="pend-top-title"><em>Order Details</em></span></center></div>
+                    <hr>
+                    <div id="pend-order-det-con-items">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <th>Title</th>
+                                <th>QTY</th>
+                                <th>@</th>
+                                <th>Total</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                {% for rs in orderitems %}
+                                <tr>
+                                    <td>{{ rs.product.title }}</td>
+                                    <td>{{ rs.quantity}}</td>
+                                    <td>{{ rs.Sprice}}</td>
+                                    <td>{{ rs.amount}}</td>
+                                    <td>
+                                        <div class="cart-input-action">
+                                            <a href="/cashier/shopcart_plus/{{ rs.id }}">
+                                                <span class="material-icons icon-action">add_circle_outline</span>
+                                            </a>
+                                            <input id=cartinput type=number value="{{ rs.quantity }}" min=1 max=110 readonly>
+                                            <a href="/cashier/shopcart_minus/{{ rs.id }}">
+                                                <span class="material-icons icon-action">remove_circle_outline</span>
+                                            </a>
+                                        </div>
+                                
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .pend-top-title{
+        font-size: 25px;
+        font-weight: bold;
+        word-spacing: 10px;
+        letter-spacing: 5px;
+    }
+    #pend-order-con{
+        background-color: white;
+        margin-left: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    #pend-order-con-items{
+        height: 72vh;
+        overflow-y: auto;
+    }
+    #pend-order-det-con{
+        background-color: white;
+        margin-top: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+    #pend-order-det-con-items{
+        height: 67vh;
+        overflow-y: auto;
+    }
+    
+</style>
+{% endblock %}

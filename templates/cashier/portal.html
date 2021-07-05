@@ -1,0 +1,38 @@
+{% extends 'base/index.html'%}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <div>
+    
+    <!-- TOP NAV-->
+   <div id="cashier-tp-nav-vh">
+    {% include 'cashier/nav.html'%}
+   </div>
+    <!-- TOP NAV-->
+    <!-- Body  start -->
+    <div id="cashier-by-nav-vh">
+        {% include 'cashier/content.html'%}  
+    </div>
+    <!--  Body End -->
+    </div>
+    
+    <style>
+      #cashier-tp-nav-vh{
+          height: 18vh;
+      }
+      #cashier-by-nav-vh{
+          height: 82vh;
+          overflow-y: scroll;
+      }
+      @media only screen and (max-width: 768px) {
+        #cashier-tp-nav-vh{
+          height:auto;
+      }
+      #cashier-by-nav-vh{
+          height: auto;
+      }
+        }
+    </style>
+{% endblock %}
